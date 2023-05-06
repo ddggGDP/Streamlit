@@ -1,17 +1,18 @@
 import streamlit as st
 import pymysql
 st.set_page_config(page_title="基于Streamlit的登录、注册、注销功能演示",layout="wide")
+#修改下数据库连接设置
 con =pymysql.connect(host="localhost",user="root", password="abcde", database="python", charset="utf8")
 c = con.cursor()
 
 def create_usertable():
-    c.excute("CREATE TABLE IF NOT EXISTS userstable(username TEXT, password TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS userstable(username TEXT, password TEXT)")
 
 def add_userdata(username,password):
     if c.execute('SELECT username FROM userstable WHERE username = %s',(username)):
         st.warning("用户名已存在，请更换一个新的用户名。")
     else:
-        c.excute('INSERT INTO userstable(username,password) VALUES(%s,%s)',(username,password))
+        c.execute('INSERT INTO userstable(username,password) VALUES(%s,%s)',(username,password))
         con.commit()
         st.success("恭喜，您已成功注册。")
         st.info("请在左侧选择“登录”选项进行登录。")
@@ -48,11 +49,11 @@ def main():
         st.markdown('''Streamlit文档的地址是：https://docs.streamlit.io/''')
         c1, c2 = st.columns(2)
         with c1:
-            st.success()
-            st.image()
+            st.success("这个是第一栏")
+#             st.image()
         with c2:
-            st.success()
-            st.image()
+            st.success("这个是第二栏")
+#             st.image()
     elif choice =="登录":
         st.sidebar.subheader("登录区域")
         username = st.sidebar.text_input("用户名")
@@ -67,11 +68,11 @@ def main():
                     st.balloons()
                     c1, c2 = st.columns(2)
                     with c1:
-                        st.success()
-                        st.image()
+                        st.success("这个是第一栏")
+#                         st.image()
                     with c2:
-                        st.success()
-                        st.image()
+                        st.success("这个是第二栏")
+#                         st.image()
             else:
                 st.sidebar.warning("用户名或者密码不正确，请检查后重试。")  
     elif choice =="注册":
